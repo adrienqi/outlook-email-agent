@@ -1,8 +1,20 @@
 import Image from "next/image";
+import { getCurrentUser } from "../../lib/supabase";
 
 export default function Home() {
   // Test environment variable access
   console.log('Supabase URL:', process.env.NEXT_PUBLIC_SUPABASE_URL);
+  
+  // Test Supabase client
+  getCurrentUser().then((user) => {
+    if (user) {
+      console.log('Current user:', user);
+    } else {
+      console.log('No user signed in - this is expected for now');
+    }
+  }).catch((error: unknown) => {
+    console.log('Supabase test error:', error);
+  });
   
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
