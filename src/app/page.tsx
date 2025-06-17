@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { getCurrentUser } from "../../lib/supabase";
+import { getInbox } from "../../lib/outlookClient";
 
 export default function Home() {
   // Test environment variable access
@@ -14,6 +15,13 @@ export default function Home() {
     }
   }).catch((error: unknown) => {
     console.log('Supabase test error:', error);
+  });
+
+  // Test Outlook client
+  getInbox().then((emails) => {
+    console.log('Outlook inbox test:', emails.length, 'emails fetched');
+  }).catch((error: unknown) => {
+    console.log('Outlook test error:', error);
   });
   
   return (
